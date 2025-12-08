@@ -4,17 +4,15 @@
     "service": "lab-runner",
     "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
     "forwardPorts": [
-        8888,
-        27017
+        8888
     ],
     "hostRequirements": {
         "cpus": 4
     },
     "containerEnv": {
-        "PROXY_ENDPOINT": "https://vtqjvgchmwcjwsrela2oyhlegu0hwqnw.lambda-url.us-west-2.on.aws/",
-        "MONGODB_URI": "mongodb://admin:mongodb@mongodb:27017/"
+        "PROXY_ENDPOINT": "https://vtqjvgchmwcjwsrela2oyhlegu0hwqnw.lambda-url.us-west-2.on.aws/"
     },
-    "postCreateCommand": "pip install -r requirements.txt",
+    "postCreateCommand": "pip install --user -r requirements.txt",
     "customizations": {
         "codespaces": {
             "openFiles": []
