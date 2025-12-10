@@ -1,0 +1,599 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        224
+      ],
+      "id": "3f09ef35-ed4a-42d5-9532-019f44ac8de5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://www.inven.co.kr/board/webzine/1288",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "list"
+            },
+            {
+              "name": "p",
+              "value": "1"
+            },
+            {
+              "name": "sterm"
+            },
+            {
+              "name": "name",
+              "value": "subject"
+            },
+            {
+              "name": "keyword",
+              "value": "추천"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+            },
+            {
+              "name": "accept-language",
+              "value": "en-US,en;q=0.9"
+            },
+            {
+              "name": "cache-control",
+              "value": "max-age=0"
+            },
+            {
+              "name": "priority",
+              "value": "u=0, i"
+            },
+            {
+              "name": "referer",
+              "value": "https://www.inven.co.kr/board/webzine/1288"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"macOS\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "document"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "navigate"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-origin"
+            },
+            {
+              "name": "sec-fetch-user",
+              "value": "?1"
+            },
+            {
+              "name": "upgrade-insecure-requests",
+              "value": "1"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "cookie",
+              "value": "VISIT_SITE=webzine;_fwb=131EJ1BoKkUAGg7yA8HwiVr.1765282295237;OAX=aB6kDWk4EgYAAVFc;_ga=GA1.1.182442269.1765282296;_clck=9amcn6%5E2%5Eg1p%5E0%5E2169;inven_link=stream;_ga_K8NJQS78X7=GS2.1.s1765282296$o1$g1$t1765282365$j60$l0$h0;wcs_bt=105811aa1e895d:1765282365;_ga_P0BBTC1DR3=GS2.1.s1765282295$o1$g1$t1765282365$j60$l0$h0;_clsk=19jlxdy%5E1765282366602%5E7%5E1%5Ez.clarity.ms%2Fcollect;cto_bundle=9RqFsV8zWmNLJTJGNzB2em9Cd25LTlhhTkQ2eDl4JTJCcyUyRmJRWXo3NVdJZWJBdkF6WnVkQXJzMnZCenhLNFd1dUxYbGMxOUY0dlVCRXglMkZVYnV5R3MxSWxqYnFiRXZra1VGV1ZIN0M5WFlXRUxmekJqbFpvZ0JnTVFValVMQjBjd3AyeURzY2t6eCUyQnJ5WWc1bXlYQldCQWFxbGpuYzl3JTNEJTNE;_cc_id=e33ab484fe8e369eac282f016250f8ca;panoramaId_expiry=1765368772642;panoramaId=2951880578177dda6abc94001004a9fb927a294753fadf66047ef08ccfacb414;panoramaIdType=panoDevice;"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        224,
+        224
+      ],
+      "id": "afd7b0be-139a-424d-873f-661dd7bf208e",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "row_html",
+              "cssSelector": ".board-list table tbody tr",
+              "returnValue": "html",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        448,
+        224
+      ],
+      "id": "e1189ece-7098-4b75-8c74-cb4b337d22e0",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "row_html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        656,
+        224
+      ],
+      "id": "214fb158-884e-45f7-99fb-0a3e604297fd",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "row_html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "link",
+              "cssSelector": "a.subject-link",
+              "returnValue": "attribute",
+              "attribute": "href"
+            },
+            {
+              "key": "id",
+              "cssSelector": "span"
+            }
+          ]
+        },
+        "options": {
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        864,
+        224
+      ],
+      "id": "2e7cb74f-428c-47b2-ac14-b108976e92f1",
+      "name": "HTML1"
+    },
+    {
+      "parameters": {
+        "url": "https://api.ipify.org?format=json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "e6c37543-d0c3-492d-8d8b-6845260fd569",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1248,
+        224
+      ],
+      "id": "3e04d714-c193-4d2a-98e9-e6e0ad3c08c5",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "missingIds",
+              "field2": "id"
+            }
+          ]
+        },
+        "outputDataFrom": "input2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        0,
+        480
+      ],
+      "id": "0fe26021-fe9d-4129-9439-5f0a02d410c1",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "70bf6772-3803-4091-a16b-015c7930e624",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "a0459c70-eab3-4d6c-bda8-c51f66601392",
+              "name": "link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1056,
+        224
+      ],
+      "id": "17cfaf26-253d-4e9c-8ad1-4a0675b28bb9",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        256,
+        608
+      ],
+      "id": "2ca4a5a1-f831-4cbd-bc15-f1765814ab88",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        448,
+        640
+      ],
+      "id": "bf208669-01a1-4710-a54a-914c65e442c8",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": ".articleTitle h1"
+            },
+            {
+              "key": "content_raw",
+              "cssSelector": "#powerbbsContent"
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        656,
+        640
+      ],
+      "id": "f8a9c5cc-5dee-4828-9f27-84abaab874b9",
+      "name": "HTML2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        848,
+        464
+      ],
+      "id": "8a9e2f3b-f775-44d5-bab1-4ac7297b2bc4",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.content_raw }}",
+        "destinationKey": "content",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        848,
+        640
+      ],
+      "id": "c80d5d16-970b-4fb6-8d2d-ff0ce7b9be79",
+      "name": "Markdown"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1408,
+        432
+      ],
+      "id": "051bf3ef-90aa-4120-b407-ca942ab535ae",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1856,
+        416
+      ],
+      "id": "e31bee52-10ee-4daa-8c97-34728abf95ba",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        16,
+        976
+      ],
+      "id": "907abd5d-80a6-42bd-805c-aefbcca16b32",
+      "name": "When chat message received",
+      "webhookId": "6bff6452-91bc-4467-8f03-3598bbbfd1c6"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "당신은 인벤(Inven) 게시글 데이터를 기반으로 게임을 추천해주거나 정보를 제공하는 AI 어시스턴트입니다.\n\n다음 규칙을 엄격하게 준수하세요:\n1. 반드시 제공된 도구(MongoDB Vector Store)를 통해 검색된 정보(Context) 만을 기반으로 답변해야 합니다.\n2. 당신의 사전 지식이나 외부 정보를 사용하여 답변하지 마세요.\n3. 사용자의 질문에 대한 정보가 검색 결과에 없다면, 솔직하게 \"죄송합니다. 제가 가진 데이터에는 관련 정보가 없습니다.\"라고 말하세요. 말을 지어내지 마세요.\n4. 답변할 때는 해당 정보의 출처(게시글 제목 등)를 함께 언급해주면 좋습니다.\n5. 친절하고 간결하게 답변하세요."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        224,
+        976
+      ],
+      "id": "22ac54f7-94a7-44ee-8988-aa2a2811a27b",
+      "name": "AI Agent"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "HTML2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML2": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "bd60955c-68a6-426e-a7ef-486bf283a327",
+  "meta": {
+    "instanceId": "7eeffcd86cf7c83b6801a86f0bcce9ee4889ec53bcd98ee0b5b87725cf1fa39f"
+  },
+  "id": "XxPVK9C42e8pjdJk",
+  "tags": []
+}
