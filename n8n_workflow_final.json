@@ -1,0 +1,902 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        32
+      ],
+      "id": "639200a2-15f0-4c03-8c78-ce28d6dac6ea",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "https://www.inven.co.kr/board/webzine/1288",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "query",
+              "value": "list"
+            },
+            {
+              "name": "p",
+              "value": "1"
+            },
+            {
+              "name": "sterm"
+            },
+            {
+              "name": "name",
+              "value": "subject"
+            },
+            {
+              "name": "keyword",
+              "value": "추천"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7"
+            },
+            {
+              "name": "accept-language",
+              "value": "en-US,en;q=0.9"
+            },
+            {
+              "name": "cache-control",
+              "value": "max-age=0"
+            },
+            {
+              "name": "priority",
+              "value": "u=0, i"
+            },
+            {
+              "name": "referer",
+              "value": "https://www.inven.co.kr/board/webzine/1288"
+            },
+            {
+              "name": "sec-ch-ua",
+              "value": "\"Chromium\";v=\"142\", \"Google Chrome\";v=\"142\", \"Not_A Brand\";v=\"99\""
+            },
+            {
+              "name": "sec-ch-ua-mobile",
+              "value": "?0"
+            },
+            {
+              "name": "sec-ch-ua-platform",
+              "value": "\"macOS\""
+            },
+            {
+              "name": "sec-fetch-dest",
+              "value": "document"
+            },
+            {
+              "name": "sec-fetch-mode",
+              "value": "navigate"
+            },
+            {
+              "name": "sec-fetch-site",
+              "value": "same-origin"
+            },
+            {
+              "name": "sec-fetch-user",
+              "value": "?1"
+            },
+            {
+              "name": "upgrade-insecure-requests",
+              "value": "1"
+            },
+            {
+              "name": "user-agent",
+              "value": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"
+            },
+            {
+              "name": "cookie",
+              "value": "VISIT_SITE=webzine;_fwb=131EJ1BoKkUAGg7yA8HwiVr.1765282295237;OAX=aB6kDWk4EgYAAVFc;_ga=GA1.1.182442269.1765282296;_clck=9amcn6%5E2%5Eg1p%5E0%5E2169;inven_link=stream;_ga_K8NJQS78X7=GS2.1.s1765282296$o1$g1$t1765282365$j60$l0$h0;wcs_bt=105811aa1e895d:1765282365;_ga_P0BBTC1DR3=GS2.1.s1765282295$o1$g1$t1765282365$j60$l0$h0;_clsk=19jlxdy%5E1765282366602%5E7%5E1%5Ez.clarity.ms%2Fcollect;cto_bundle=9RqFsV8zWmNLJTJGNzB2em9Cd25LTlhhTkQ2eDl4JTJCcyUyRmJRWXo3NVdJZWJBdkF6WnVkQXJzMnZCenhLNFd1dUxYbGMxOUY0dlVCRXglMkZVYnV5R3MxSWxqYnFiRXZra1VGV1ZIN0M5WFlXRUxmekJqbFpvZ0JnTVFValVMQjBjd3AyeURzY2t6eCUyQnJ5WWc1bXlYQldCQWFxbGpuYzl3JTNEJTNE;_cc_id=e33ab484fe8e369eac282f016250f8ca;panoramaId_expiry=1765368772642;panoramaId=2951880578177dda6abc94001004a9fb927a294753fadf66047ef08ccfacb414;panoramaIdType=panoDevice;"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -32,
+        32
+      ],
+      "id": "c1d39a7c-830a-464c-ae4e-cc5084e2b1fb",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "row_html",
+              "cssSelector": ".board-list table tbody tr",
+              "returnValue": "html",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        192,
+        32
+      ],
+      "id": "fcc3913b-89a2-4454-b77b-304b5a9a5cf1",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "row_html",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        400,
+        32
+      ],
+      "id": "16ad0118-20ae-4991-b652-cb7d6513dc14",
+      "name": "Split Out"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "dataPropertyName": "row_html",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "link",
+              "cssSelector": "a.subject-link",
+              "returnValue": "attribute",
+              "attribute": "href"
+            },
+            {
+              "key": "id",
+              "cssSelector": "span"
+            }
+          ]
+        },
+        "options": {
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        608,
+        32
+      ],
+      "id": "c11175a6-93ee-426c-acde-455dec67e72b",
+      "name": "HTML1"
+    },
+    {
+      "parameters": {
+        "operation": "aggregate",
+        "collection": "inven",
+        "query": "=[\n  {\n    \"$facet\": {\n      \"foundDocs\": [\n        {\n          \"$match\": {\n            \"_id\": {\n              \"$in\": [{{$json.id}}]\n            }\n          }\n        },\n        {\n          \"$project\": {\n            \"_id\": 1\n          }\n        }\n      ]\n    }\n  },\n  {\n    \"$project\": {\n      \"missingIds\": {\n        \"$setDifference\": [\n          [{{ $json.id }}],\n          \"$foundDocs._id\"\n        ]\n      }\n    }\n  }\n]"
+      },
+      "type": "n8n-nodes-base.mongoDb",
+      "typeVersion": 1.2,
+      "position": [
+        1184,
+        32
+      ],
+      "id": "71eb49f1-f9fb-41ab-afa2-1112bcfec70c",
+      "name": "Aggregate documents",
+      "alwaysOutputData": true,
+      "credentials": {
+        "mongoDb": {
+          "id": "4yL8VsaxNqBqOe0x",
+          "name": "MongoDB account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://api.ipify.org?format=json",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -256,
+        -192
+      ],
+      "id": "937bba26-52f6-44ce-98c2-f4cee0fcd514",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "id"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        992,
+        32
+      ],
+      "id": "5f48e192-5829-4ff4-a874-f25e431c48c0",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "missingIds",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        32
+      ],
+      "id": "d6e0aa58-9b21-4b4d-b7b2-ff22769901d8",
+      "name": "Split Out1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "advanced": true,
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "missingIds",
+              "field2": "id"
+            }
+          ]
+        },
+        "outputDataFrom": "input2",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -256,
+        288
+      ],
+      "id": "a08d5b58-7278-42a4-8385-c14698123c8b",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "70bf6772-3803-4091-a16b-015c7930e624",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "a0459c70-eab3-4d6c-bda8-c51f66601392",
+              "name": "link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        800,
+        32
+      ],
+      "id": "792e7d7e-81d4-40a7-a481-ed7508a4203d",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {
+          "reset": false
+        }
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        0,
+        416
+      ],
+      "id": "86acc415-3af3-4bfb-912a-a267b8739aa5",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.link }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        192,
+        448
+      ],
+      "id": "7232738d-bdde-4b08-a437-2d5c0bee5925",
+      "name": "HTTP Request2"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": ".articleTitle h1"
+            },
+            {
+              "key": "content_raw",
+              "cssSelector": "#powerbbsContent"
+            }
+          ]
+        },
+        "options": {
+          "trimValues": true,
+          "cleanUpText": true
+        }
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        400,
+        448
+      ],
+      "id": "b03f7c03-9c56-4dc6-9388-31781aa194c8",
+      "name": "HTML2"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        592,
+        272
+      ],
+      "id": "d376e990-db42-4829-b6ec-10be185c4989",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.content_raw }}",
+        "destinationKey": "content",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.markdown",
+      "typeVersion": 1,
+      "position": [
+        592,
+        448
+      ],
+      "id": "68fde429-0eee-48cf-b616-23c292dd8ac6",
+      "name": "Markdown"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "mongoCollection": {
+          "__rl": true,
+          "value": "inven",
+          "mode": "list",
+          "cachedResultName": "inven"
+        },
+        "metadata_field": "metadata",
+        "vectorIndexName": "test",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreMongoDBAtlas",
+      "typeVersion": 1.3,
+      "position": [
+        1344,
+        336
+      ],
+      "id": "ebac5fdb-bf3c-45e6-8d59-105f403ee481",
+      "name": "MongoDB Atlas Vector Store",
+      "credentials": {
+        "mongoDb": {
+          "id": "4yL8VsaxNqBqOe0x",
+          "name": "MongoDB account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1152,
+        240
+      ],
+      "id": "fed0d9ed-e523-4f7e-b046-072b193f13ca",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "=title: {{ $('Loop Over Items1').item.json.title }}\ncontent: {{ $('Loop Over Items1').item.json.content }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "id",
+                "value": "={{ $('Merge1').item.json.id }}"
+              },
+              {
+                "name": "link",
+                "value": "={{ $('Merge1').item.json.link }}"
+              },
+              {
+                "name": "titile",
+                "value": "={{ $('Loop Over Items1').item.json.title }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        1456,
+        592
+      ],
+      "id": "a13d923e-1639-4276-9f12-9986edec7b87",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        928,
+        1152
+      ],
+      "id": "7118518e-841a-462d-85ea-7bc0552ff032",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "mXQ8Sftmufoe3iOB",
+          "name": "n8n free OpenAI API credits"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1712,
+        224
+      ],
+      "id": "636eb8bd-a277-4213-9a1d-bcffb03f0c13",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -240,
+        784
+      ],
+      "id": "93224535-076a-4841-9654-32275d6035e2",
+      "name": "When chat message received",
+      "webhookId": "6bff6452-91bc-4467-8f03-3598bbbfd1c6"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "당신은 인벤(Inven) 게시글 데이터를 기반으로 게임을 추천해주거나 정보를 제공하는 AI 어시스턴트입니다.\n\n다음 규칙을 엄격하게 준수하세요:\n1. 반드시 제공된 도구(MongoDB Vector Store)를 통해 검색된 정보(Context) 만을 기반으로 답변해야 합니다.\n2. 당신의 사전 지식이나 외부 정보를 사용하여 답변하지 마세요.\n3. 사용자의 질문에 대한 정보가 검색 결과에 없다면, 솔직하게 \"죄송합니다. 제가 가진 데이터에는 관련 정보가 없습니다.\"라고 말하세요. 말을 지어내지 마세요.\n4. 답변할 때는 해당 정보의 출처(게시글 제목 등)를 함께 언급해주면 좋습니다.\n5. 친절하고 간결하게 답변하세요."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -32,
+        784
+      ],
+      "id": "a041a71a-25b5-46a3-a13b-8ff81dbadc64",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "vector storage for inven 추천 data",
+        "mongoCollection": {
+          "__rl": true,
+          "value": "inven",
+          "mode": "list",
+          "cachedResultName": "inven"
+        },
+        "metadata_field": "metadata",
+        "vectorIndexName": "test",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreMongoDBAtlas",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        1008
+      ],
+      "id": "38821b2e-3b62-4030-a73b-04773ac15e4a",
+      "name": "MongoDB Atlas Vector Store1",
+      "credentials": {
+        "mongoDb": {
+          "id": "4yL8VsaxNqBqOe0x",
+          "name": "MongoDB account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        48,
+        1024
+      ],
+      "id": "fec8f042-ec47-48ed-8cf3-806ebca9f942",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "model": "gpt-5.1-chat",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAzureOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        992
+      ],
+      "id": "14c9fa51-5c29-49d3-9e6c-32f9974220c7",
+      "name": "Azure OpenAI Chat Model",
+      "credentials": {
+        "azureOpenAiApi": {
+          "id": "ku8KMyrsTMULL5E7",
+          "name": "Azure Open AI account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Aggregate documents": [
+      {
+        "json": {
+          "missingIds": [
+            21361,
+            21268,
+            21255,
+            21239
+          ]
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Aggregate documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate documents": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ],
+        [
+          {
+            "node": "HTTP Request2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request2": {
+      "main": [
+        [
+          {
+            "node": "HTML2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML2": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB Atlas Vector Store": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "MongoDB Atlas Vector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "MongoDB Atlas Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "MongoDB Atlas Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "MongoDB Atlas Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MongoDB Atlas Vector Store1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Azure OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "46df4255-9dad-434b-b8bf-a2d649dba428",
+  "meta": {
+    "instanceId": "7eeffcd86cf7c83b6801a86f0bcce9ee4889ec53bcd98ee0b5b87725cf1fa39f"
+  },
+  "id": "gbF87Sp79HOZLJcO",
+  "tags": []
+}
